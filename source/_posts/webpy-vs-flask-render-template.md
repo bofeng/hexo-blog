@@ -12,7 +12,7 @@ feature:
 
 ### web.py
 
-```
+```python
 import web
 from web.contrib import template
 
@@ -32,7 +32,7 @@ application = app.wsgifunc()
 
 ### Flask
 
-```
+```python
 from flask import Flask
 from flask import render_template
 app = Flask(__name__)

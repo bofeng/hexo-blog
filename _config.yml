@@ -15,7 +15,7 @@ timezone: 'America/New_York'
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
 url: http://example.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -101,6 +101,11 @@ ignore:
 theme: cactus-customized
 theme_config:
   colorscheme: white
+
+search:
+  path: search.xml
+  field: post
+  content: true
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

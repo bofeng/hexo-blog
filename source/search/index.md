@@ -1,4 +1,3 @@
----
 title: Search
 type: search
 ---

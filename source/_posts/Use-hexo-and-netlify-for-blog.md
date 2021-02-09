@@ -56,8 +56,24 @@ logo:
   gravatar: false
   grayout: false
   
+
+```
+
+
+
+## RSS
+
+To add rss output support:
+
+1, `npm install hexo-generator-feed --save`
+
+2, In themes (cactus)'s `_config.yml` file, add:
+
+```yaml
 rss: atom.xml
 ```
+
+Then you will be able to see your rss address at yourwebsite.com/atom.xml 
 
 
 

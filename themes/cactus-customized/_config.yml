@@ -19,6 +19,7 @@ nav:
   Tags: /tags/
   articles: /archives/
   Open Source License: /open-source-license/
+  RSS: /atom.xml
 
 # Links to your social media accounts.
 # The keys should correspond to Fontawesome icon names

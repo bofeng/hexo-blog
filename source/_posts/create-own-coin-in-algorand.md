@@ -66,7 +66,7 @@ Run it to generate the account:
 ```bash
 $ python create_account.py
 Public Address: 73XNVFL4MFBBKRAMJZSXOXU5E5XT3EIFYNYDUAHIHB4Q252ZIV6GAAIYVU
-Mnemonic: pepper learn practice robot actress cigar radio peanut long lend uncle review equal manual gravity cancel scrub creek damage admit choose miss ginger able upgrade
+Mnemonic: <Your Mnemonic Passphrase>
 ```
 
 

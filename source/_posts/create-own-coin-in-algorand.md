@@ -149,7 +149,7 @@ Now let's run it to create coin:
 ```bash
 $ python create_coin.py
 Your mnemonic words:
-pepper learn practice robot actress cigar radio peanut long lend uncle review equal manual gravity cancel scrub creek damage admit choose miss ginger able upgrade
+<Paste Your Mnemonic Passphrase Here, Hit Enter>
 Transaction ID: UZ5Y3SLUKBEWK5GNZ3QLTW63FXV4WWRIMIB54R3MEGSE37GHXR7A
 ```
 

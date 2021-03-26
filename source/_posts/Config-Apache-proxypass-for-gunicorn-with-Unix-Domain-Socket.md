@@ -88,6 +88,22 @@ If you don't need to preserve the host, these 3 lines will work for most of case
 
 
 
+## Use Nginx
+
+Config this with Nginx is painless, no matter you can using HTTP or UDS, just set that in your backend upstream:
+
+```nginx
+upstream backend_server {
+    server unix:/home/project/abc/.gunicorn.sock;
+}
+
+location / {
+    proxy_pass http://backend_server;
+}
+```
+
+
+
 ## Reference:
 
 * https://stackoverflow.com/questions/24351782/proxypassreverse-dropping-https

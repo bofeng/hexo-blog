@@ -43,6 +43,9 @@ Once you know how it works, it really easy to config. There are 2 ways:
 <VirtualHost *:443>
 	ServerName yourdomain.com
 	
+	# return https to user, require headers.load module
+	RequestHeader set X-Forwarded-Proto "https"
+	
 	ProxyPreserveHost On
 	ProxyPass / unix:/home/project/htmleditorbuilder/.gunicorn.sock|http://localhost/
 	ProxyPassReverse / http://yourdomain.com/
@@ -59,6 +62,9 @@ Once you know how it works, it really easy to config. There are 2 ways:
 ```apache
 <VirtualHost *:443>
 	ServerName yourdomain.com
+	
+	# return https to user, require headers.load module
+	RequestHeader set X-Forwarded-Proto "https"
 	
 	ProxyPass / unix:/home/project/bizcanvas/.gunicorn.sock|http://localhost/
 	ProxyPassReverse / http://localhost/
@@ -79,12 +85,15 @@ The key idea is, `ProxyPassReverse`'s value must match the Host returned by  you
 Once you set this up, when your backend server handle request, in the response's `Server` header, it will show `gunicorn/20.0.4` -ish, you don't want to expose that for security reason. One way to hide it is just unset the header:
 
 ```apache
-	Header unset Server # need to load the headers.load module
+	# both require headers.load module
+	RequestHeader set X-Forwarded-Proto "https"
+	Header unset Server
+	
 	ProxyPass / unix:/home/projectfolder/.gunicorn.sock|http://localhost/
 	ProxyPassReverse / http://localhost/
 ```
 
-If you don't need to preserve the host, these 3 lines will work for most of cases.
+If you don't need to preserve the host, these 4 lines will work for most of cases.
 
 
 

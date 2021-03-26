@@ -90,7 +90,7 @@ If you don't need to preserve the host, these 3 lines will work for most of case
 
 ## Use Nginx
 
-Config this with Nginx is painless, no matter you can using HTTP or UDS, just set that in your backend upstream:
+Config this with Nginx is painless, no matter you are using HTTP or UDS, just set that in your backend upstream:
 
 ```nginx
 upstream backend_server {

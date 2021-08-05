@@ -8,7 +8,7 @@ tags: [ubuntu]
 ## Install common software
 
 ```bash
-$ apt update && apt install vim acl nginx python3-pip build-essential python3-dev git gcc fail2ban socat -y
+$ apt update && apt install vim acl nginx python3-pip build-essential python3-dev git gcc fail2ban socat supervisor -y
 ```
 
 

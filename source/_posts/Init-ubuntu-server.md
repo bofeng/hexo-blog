@@ -8,8 +8,7 @@ tags: [ubuntu]
 ## Install common software
 
 ```bash
-$ apt update
-$ apt install vim nginx python3-pip build-essential python3-dev git gcc fail2ban socat -y
+$ apt update && apt install vim acl nginx python3-pip build-essential python3-dev git gcc fail2ban socat -y
 ```
 
 
@@ -295,5 +294,13 @@ $ wget https://golang.org/dl/go1.16.6.linux-amd64.tar.gz
 $ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.6.linux-amd64.tar.gz
 $ export PATH=$PATH:/usr/local/go/bin  # or add to $HOME/.bashrc
 $ go version
+```
+
+
+
+## Disable ping
+
+```bash
+$ echo "net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf && sysctl -p 
 ```
 

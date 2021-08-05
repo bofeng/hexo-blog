@@ -42,6 +42,19 @@ $ chmod 640 authorized_keys
 $ useradd -m project
 ```
 
+### Add user to sudoers
+
+```bash
+$ adduser $USER sudo
+```
+
+### Set user's sudo password
+
+```bash
+$ su
+$ passwd $USER
+```
+
 
 
 ## Config sshd

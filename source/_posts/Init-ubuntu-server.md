@@ -225,8 +225,9 @@ upstream mywebsite_server {
 }
 
 server {
-  	listen 80 443;
-  	server_name mywebsite.com *.mywebsite.com
+    listen 80;
+    listen 443;
+    server_name mywebsite.com *.mywebsite.com;
     
     ssl_certificate /etc/cert/cloudflare/mywebsite.com/cert.pem;
     ssl_certificate_key /etc/cert/cloudflare/mywebsite.com/key.pem;

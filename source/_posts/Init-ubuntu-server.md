@@ -9,7 +9,7 @@ tags: [ubuntu]
 
 ```bash
 $ apt update
-$ apt install nginx python3-pip build-essential python3-dev git gcc fail2ban socat -y
+$ apt install vim nginx python3-pip build-essential python3-dev git gcc fail2ban socat -y
 ```
 
 
@@ -61,6 +61,15 @@ service ssh restart
 
 
 
+## Config vim
+
+```bash
+$ mkdir ~/.vimbackup
+$ cd ~ && wget https://gist.githubusercontent.com/bofeng/3a5a70bed544e7b63584471d53a59dbf/raw/91f5ac8bb1149d3fa4565594fae067abedf926cb/vim.vimrc && mv vim.vimrc .vimrc
+```
+
+
+
 ## Config ufw
 
 ```bash
@@ -81,6 +90,7 @@ $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -
 $ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 $ apt update
 $ apt install docker-ce docker-ce-cli containerd.io
+$ apt install docker-compose
 ```
 
 
@@ -108,16 +118,23 @@ $ make install
 
 ### Install with docker
 
-docker-compose.yml
+```bash
+$ su project
+$ mkdir -p redis/16379
+$ cd redis/16379
+```
+
+add docker-compose.yml:
 
 ```yaml
+version: "3"
 services:
   redis-cache:
     image: redis:6.2.5-alpine
     ports:
       - 127.0.0.1:16379:6379
     volumes:
-      - ./data/16379:/data
+      - ./data:/data
 ```
 
 Connect via local installed `redis-cli`:
@@ -142,6 +159,8 @@ $ docker exec -it <container-id> redis-cli
 user project;
 worker_processes auto;
 worker_cpu_affinity auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
 
 events {
     worker_connections 1024;
@@ -149,9 +168,23 @@ events {
 }
 
 http {
+  	sendfile on;
+  	tcp_nopush on;
+  	types_hash_max_size 2048;
     server_tokens off;
-    # ...
-
+    
+  	# mime types
+  	include /etc/nginx/mime.types;
+  	default_type application/octet-stream;
+  
+  	# ssl
+  	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+  	ssl_prefer_server_ciphers on;
+  
+    # log
+  	access_log /var/log/nginx/access.log;
+  	error_log /var/log/nginx/error.log;
+  
     # gzip
     gzip on;
     gzip_vary on;
@@ -177,6 +210,9 @@ http {
     # ...
     add_header Permissions-Policy "interest-cohort=()";
     add_header X-Xss-Protection "1; mode=block" always;
+  
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
 }
 ```
 
@@ -248,7 +284,6 @@ server {
         proxy_pass http://upstream_server;
     }
 }
-
 ```
 
 

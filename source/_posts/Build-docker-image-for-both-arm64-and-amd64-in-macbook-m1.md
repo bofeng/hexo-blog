@@ -54,6 +54,8 @@ Steps:
 
 
 
+Please notice that you need to push your image to the remote registry at the build stage, if you are still in the stage of building and testing your image, you probably don't want to use this special build method. In the building and testing your image stage, it is better you uses the normal `docker build` command, and once it is done, run the `docker buildx build --platform` to build a your release and push to the remote registery.
+
 ## Reference:
 
 * https://blog.jaimyn.dev/how-to-build-multi-architecture-docker-images-on-an-m1-mac/

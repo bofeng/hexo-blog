@@ -20,10 +20,22 @@ If you don't do any special config, when you build an image in your macbook m1, 
 If it just raises this warning message, then put the parameter `--platform` could solve it:
 
 ```bash
+# when run an arm64 image in linux/amd64
 $ docker run --rm -p 3000:3000 --platform linux/arm64/v8 yourimage:1.0.0
 ```
 
-Another solution is, when build your image, make it runnable on both arm64 and amd64 by default:
+
+
+Another solution is, when build an image in your macbook m1, always use a amd64 image, for example, if you are using `FROM alpine:3.14`, change it to `FROM amd64/alpine:3.14`, then you will get an image that can run under amd64, which means when you run it in your linux, it won't raise any error. But when you run it directly in your macbook m1, it will raise a similar warning like above, and this time you need to specify the `platform` argument to `linux/amd64`:
+
+```bash
+# when run an amd64 image in macbook m1 (arm64)
+$ docker run --rm -p 3000:3000 --platform linux/amd64 yourimage:1.0.0
+```
+
+
+
+The third solution is, when build your image, make it runnable on both arm64 and amd64 by default:
 
 
 

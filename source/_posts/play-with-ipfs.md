@@ -1,7 +1,7 @@
 ---
 title: 'Play w/ IPFS'
 date: 2021-01-10 18:48:02
-tags: []
+tags: [ipfs]
 published: true
 hideInList: false
 feature: 
@@ -117,5 +117,4 @@ You can take your server down, in the command line, just use Ctrl-C to quit the 
 * [IPFS Companion](https://docs.ipfs.io/install/ipfs-companion/)
 * [After my local server stops hosting the file, where does the file go?](https://discuss.ipfs.io/t/after-my-local-server-stops-hosting-the-file-where-does-the-file-go/1438)
 * [Getting started with Python and IPFS](https://medium.com/python-pandemonium/getting-started-with-python-and-ipfs-94d14fdffd10)
-
 

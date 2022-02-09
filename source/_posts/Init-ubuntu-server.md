@@ -8,7 +8,9 @@ tags: [ubuntu]
 ## Install common software
 
 ```bash
-$ apt update && apt install vim acl nginx python3-pip build-essential python3-dev git gcc fail2ban socat supervisor -y
+$ apt update 
+$ apt upgrade 
+$ apt install vim acl nginx python3-pip build-essential python3-dev git gcc fail2ban socat supervisor -y
 ```
 
 
@@ -30,9 +32,10 @@ $ useradd -m bofeng
 $ cd /home/bofeng
 $ su bofeng
 $ mkdir .ssh
+$ chmod 700 .ssh
 $ cd .ssh
 $ vim authorized_keys  # add key to this file
-$ chmod 640 authorized_keys
+$ chmod 400 authorized_keys
 
 ```
 
@@ -90,6 +93,52 @@ $ ufw allow 443
 $ ufw allow 32200
 $ ufw enable
 $ ufw status
+```
+
+## Enable Automatic Security Updates
+
+```bash
+$ apt install unattended-upgrades
+$ vim /etc/apt/apt.conf.d/10periodic
+```
+
+Update the file like this:
+
+```
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+```
+
+And edit file: 
+
+```bash
+$ vim /etc/apt/apt.conf.d/50unattended-upgrades
+```
+
+edit it like this: (only stick with the security line, comment out the updates line)
+
+```
+Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}-security";
+//      "${distro_id}:${distro_codename}-updates";
+};
+```
+
+
+
+## Install Logwatch to keep an eye on things
+
+```bash
+$ apt install logwatch
+$ vim /etc/cron.daily/00logwatch
+```
+
+add line:
+
+```
+/usr/sbin/logwatch --output mail --mailto test@yourdomain.com --detail high
 ```
 
 
@@ -180,22 +229,22 @@ events {
 }
 
 http {
-  	sendfile on;
-  	tcp_nopush on;
-  	types_hash_max_size 2048;
+    sendfile on;
+    tcp_nopush on;
+    types_hash_max_size 2048;
     server_tokens off;
     
-  	# mime types
-  	include /etc/nginx/mime.types;
-  	default_type application/octet-stream;
+    # mime types
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
   
-  	# ssl
-  	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
-  	ssl_prefer_server_ciphers on;
+    # ssl
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
   
     # log
-  	access_log /var/log/nginx/access.log;
-  	error_log /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
   
     # gzip
     gzip on;

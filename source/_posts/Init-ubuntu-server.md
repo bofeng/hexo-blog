@@ -353,8 +353,8 @@ server {
 ## Install Go
 
 ```bash
-$ wget https://golang.org/dl/go1.16.6.linux-amd64.tar.gz
-$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.16.6.linux-amd64.tar.gz
+$ wget https://golang.org/dl/go1.17.6.linux-amd64.tar.gz
+$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.6.linux-amd64.tar.gz
 $ export PATH=$PATH:/usr/local/go/bin  # or add to $HOME/.bashrc
 $ go version
 ```

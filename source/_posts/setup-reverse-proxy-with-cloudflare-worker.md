@@ -1,5 +1,5 @@
 ---
-title: setup reverse proxy with cloudflare worker
+title: Setup reverse proxy with cloudflare worker
 typora-root-url: ../../source
 date: 2022-05-14 12:08:11
 tags: [cloudflare, proxy]

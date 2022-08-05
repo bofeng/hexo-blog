@@ -69,7 +69,8 @@ Port 32200
 PermitRootLogin no
 PasswordAuthentication no
 PubkeyAuthentication yes
-ChallengeResponseAuthentication no
+ChallengeResponseAuthentication no # if < 22.04
+KbdInteractiveAuthentication no # if >= 22.04
 # restart
 service ssh restart
 ```
@@ -139,6 +140,14 @@ add line:
 
 ```
 /usr/sbin/logwatch --output mail --mailto test@yourdomain.com --detail high
+```
+
+
+
+## Disable ping
+
+```bash
+$ echo "net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf && sysctl -p 
 ```
 
 
@@ -360,10 +369,4 @@ $ go version
 ```
 
 
-
-## Disable ping
-
-```bash
-$ echo "net.ipv4.icmp_echo_ignore_all = 1" >> /etc/sysctl.conf && sysctl -p 
-```
 

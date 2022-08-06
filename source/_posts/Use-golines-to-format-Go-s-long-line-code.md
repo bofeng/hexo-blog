@@ -11,7 +11,7 @@ VS Code already does a great work to use `gofmt` to auto format your go code, bu
 
 ## Steps:
 
-1, Install `golines`: `go get -u github.com/segmentio/golines`
+1, Install `golines`: `go install github.com/segmentio/golines@latest`
 
 2, Open VS code, install the plugin named "Run on Save"
 

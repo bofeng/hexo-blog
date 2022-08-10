@@ -28,7 +28,7 @@ $ timedatectl set-timezone "America/New_York"
 ### Add user for login
 
 ```bash
-$ useradd -m bofeng
+$ useradd -m bofeng -s /bin/bash
 $ cd /home/bofeng
 $ su bofeng
 $ mkdir .ssh

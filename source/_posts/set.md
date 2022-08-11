@@ -85,7 +85,16 @@ vim /etc/pam.d/sudo
 session    required   pam_limits.so
 ```
 
+Increase other limits: open file `/etc/sysctl.conf`, add content:
 
+```
+fs.file-max = 98000
+kernel.pid_max = 64000
+kernel.threads-max = 64000
+vm.max_map_count = 128000
+```
+
+Then run `sysctl -p` to reload configuration with new value.
 
 ## 4, Create mongodb admin user
 

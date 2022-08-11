@@ -22,7 +22,7 @@ $ ldconfig -p | grep crypto
 	libbd_crypto.so.2 (libc6,x86-64) => /lib/x86_64-linux-gnu/libbd_crypto.so.2
 ```
 
-From the above you can see the openssl version is 3, and libcrypto.so.1.1 is missing
+From the above you can see the openssl version is 3, and libcrypto.so.1.1 is missing.
 
 
 
@@ -51,6 +51,12 @@ $ ldconfig -p | grep ssl
 ```
 
 Now you should be able to run `mongod`.
+
+
+
+## Summary
+
+You can run mongod on ubuntu 22.04 with manually install the libssl 1.1 library. It is strange that after ubuntu 22.04 LTS released for almost 4 months, mongodb still doesn't release a version that can run on it. While I am sure eventually a mongodb version run with libssl 3.0 will be release, you can track the progress here: https://jira.mongodb.org/browse/SERVER-62300
 
 
 

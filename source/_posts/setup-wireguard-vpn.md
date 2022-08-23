@@ -13,18 +13,43 @@ In wireguard method, there is no server/client, they are all peers. So a "server
 
 ## 1, Server configuration
 
-On ubuntu < 19.10, you need to do `sudo add-apt-repository ppa:wireguard/wireguard` first. Version >= 19.10, you can just run: `sudo apt install wireguard`
 
-Once done, generate private-key and public-key pair for your server:
+
+### 1) Installation
+
+On ubuntu < 19.10, you need to do:
+
 ```bash
-$ wg genkey
-# this will generate a private key, e.g. sL9JUT8axlP4wr6udFCraTLxIVNnYLKHNKtxt/JC42w=
-# now use this private key to generate a public key
-$ echo "sL9JUT8axlP4wr6udFCraTLxIVNnYLKHNKtxt/JC42w=" | wg pubkey
-# this will generate a public key, e.g. +cITDHN+T/AseY9eA4SuZQilDUALxC0lCwtHNC6L8yU=
+$ sudo add-apt-repository ppa:wireguard/wireguard
 ```
 
+For ubuntu >=19.10, you can just run:
+
+```bash
+$ apt install wireguard
+```
+
+Also to support the `DNS` field in the configuration file (showing below), do:
+
+```bash
+$ apt install openresolv
+```
+
+### 2) Generate private anad public key
+
+Once done, generate private-key and public-key pair for your server:
+
+```bash
+$ umask 077 
+$ wg genkey | tee privatekey | wg pubkey > publickey
+# this will genereate private key and public key into file privatekey and publickey
+# to see your private key and public key, use `cat privatekey` and `cat publickey`
+```
+
+### 3) add configuration file
+
 Now go to `/etc/wireguard/` folder, add a config file: `wg0.conf`:
+
 ```
 [Interface]
 Address = 10.0.0.1/24
@@ -36,10 +61,39 @@ PrivateKey = sL9JUT8axlP4wr6udFCraTLxIVNnYLKHNKtxt/JC42w=
 ```
 In the `PostUp` and `PostDown` step, replace `eth0` if your network is running on a different interface.
 
+### 4) Setup firewall with ufw
+
 Here we are using 51820 as the port. If you are using `ufw`, remember to unblock this port (wireguard is running on UDP protocol)
+
 ```bash
 $ ufw allow 51820/udp
 $ ufw status
+```
+
+### 5) Enable IP forwarding
+
+Also make sure your server enabled the ip_forwarding. Open `/etc/sysctl.conf`, add or uncomment line:
+
+```
+net.ipv4.ip_forward=1
+```
+
+ If you are using IPv6 with WireGuard, use:
+
+```
+net.ipv6.conf.all.forwarding=1
+```
+
+Then make sure to reload this settings with `sysctl -p`
+
+### 6) Enable wireguard auto start on system boot with systemd
+
+```bash
+$ systemctl enable wg-quick@wg0.service
+# start:
+$ systemctl start wg-quick@wg0.service
+# check running status:
+$ systemctl status wg-quick@wg0.service
 ```
 
 ## 2, Client setup
@@ -98,12 +152,7 @@ To disconnect it, MacOS and Windows user can just click the "deactivate" button.
 
 ## Others
 
-1, To make wireguard auto run on system boot, run:
-```bash
-sudo systemctl enable wg-quick@wg0
-```
-
-2, If you have some website running in your VPN server and you want to access it with wireguard VPN connected, the access IP now will be the private IP (e.g. 10.0.0.2, 10.0.0.3). If you website have an IP whitelist, you need to list those IPs as well. For example, in Nginx, you can add:
+If you have some website running in your VPN server and you want to access it with wireguard VPN connected, the access IP now will be the private IP (e.g. 10.0.0.2, 10.0.0.3). If you website have an IP whitelist, you need to list those IPs as well. For example, in Nginx, you can add:
 ```
 allow 10.0.0.1;
 allow 10.0.0.2;
@@ -120,8 +169,8 @@ allow 10.0.0.16/30;
 
 
 ## Reference
-1. [https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-ubuntu/](https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-ubuntu/)
-2. [https://tau.gr/posts/2019-03-02-set-up-wireguard-vpn-ubuntu-mac/](https://tau.gr/posts/2019-03-02-set-up-wireguard-vpn-ubuntu-mac/)
-3. [https://gist.github.com/chrisswanda/88ade75fc463dcf964c6411d1e9b20f4](https://gist.github.com/chrisswanda/88ade75fc463dcf964c6411d1e9b20f4)
-
+1. [how to setup wireguard on ubuntu 22.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-wireguard-on-ubuntu-22-04)
+2. [how to setup wireguard on ubuntu 18.04](https://www.linode.com/docs/networking/vpn/set-up-wireguard-vpn-on-ubuntu/)
+3. [https://tau.gr/posts/2019-03-02-set-up-wireguard-vpn-ubuntu-mac/](https://tau.gr/posts/2019-03-02-set-up-wireguard-vpn-ubuntu-mac/)
+4. [https://gist.github.com/chrisswanda/88ade75fc463dcf964c6411d1e9b20f4](https://gist.github.com/chrisswanda/88ade75fc463dcf964c6411d1e9b20f4)
 

@@ -182,7 +182,7 @@ soft: 1024
 hard: 1048576
 ```
 
-I don't know why this happened 😟, here is the [source code >>](https://cs.opensource.google/go/go/+/master:src/syscall/syscall_linux_386.go;l=83?q=Getrlimit&sq=&ss=go%2Fgo)
+I don't know why this happened 😟, here is the [source code >>](https://cs.opensource.google/go/go/+/master:src/syscall/syscall_linux_386.go;l=83?q=Getrlimit&sq=&ss=go%2Fgo) of Golang, but didn't see a problem. I posted a [question in stackoverflow](https://stackoverflow.com/questions/73640931/golang-getrlimit-returns-the-different-value-from-ulimit), see if we can get an answer.
 
 
 

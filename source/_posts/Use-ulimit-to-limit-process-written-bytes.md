@@ -184,7 +184,14 @@ hard: 1048576
 
 I don't know why this happened 😟, here is the [source code >>](https://cs.opensource.google/go/go/+/master:src/syscall/syscall_linux_386.go;l=83?q=Getrlimit&sq=&ss=go%2Fgo) of Golang, but didn't see a problem. I posted a [question in stackoverflow](https://stackoverflow.com/questions/73640931/golang-getrlimit-returns-the-different-value-from-ulimit), see if we can get an answer.
 
+**Update**: that question has been answered, it turns out since 1.19, Go will raise the soft NOFILE limit to the hard limit at start up, see:
 
+* https://github.com/golang/go/issues/46279
+* https://go-review.googlesource.com/c/go/+/393354/
+
+Quote:
+
+> Some systems set an artificially low soft limit on open file count, for compatibility with code that uses select and its hard-coded maximum file descriptor (limited by the size of fd_set). Go does not use select, so it should not be subject to these limits. On some systems the limit is 256, which is very easy to run into, even in simple programs like gofmt when they parallelize walking a file tree. After a long discussion on go.dev/issue/46279, we decided the best approach was for Go to raise the limit unconditionally for itself, and then leave old software to set the limit back as needed. Code that really wants Go to leave the limit alone can set the hard limit, which Go of course has no choice but to respect. 
 
 ## Reference
 
